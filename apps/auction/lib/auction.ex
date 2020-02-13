@@ -1,5 +1,5 @@
 defmodule Auction do
- alias Auction.{FakeRepo, Item}
+ alias Auction.{ Item }
 
  @repo Auction.Repo
 
@@ -16,12 +16,25 @@ defmodule Auction do
  end
 
  def insert_item(attrs) do
-  Auction.Item
-  |> struct(attrs)
+  %Item{}
+  |> Item.changeset(attrs)
   |> @repo.insert()
  end
 
  def delete_item(%Auction.Item{} = item) do
    @repo.delete(item)
+ end
+
+ def update_item(%Auction.Item{} = item, updates) do
+   item
+   |> Item.changeset(updates)
+   |> @repo.update()
+ end
+
+ def new_item, do: Item.changeset(%Item{})
+
+ def edit_item(id) do
+   get_item(id)
+   |> Item.changeset()
  end
 end
