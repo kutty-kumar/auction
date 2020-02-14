@@ -37,13 +37,12 @@ config :phoenix, :json_library, Jason
 
 config :auction, ecto_repos: [Auction.Repo]
 
-
 config :auction, Auction.Repo,
-    database: "auction",
-    username: "root",
-    password: "my-secret-pw",
-    hostname: "localhost",
-    port: 3306
+  database: "auction",
+  username: "root",
+  password: "my-secret-pw",
+  hostname: "localhost",
+  port: 3306
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
