@@ -7,6 +7,7 @@ defmodule AuctionWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug AuctionWeb.Authenticator
   end
 
   pipeline :api do
@@ -17,7 +18,11 @@ defmodule AuctionWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/login", SessionController, :new
+    post "/login", SessionController, :create
+    delete "/login", SessionController, :delete
     resources "/items", ItemController, only: [:index, :show, :new, :create, :edit, :update]
+    resources "/users", UserController, only: [:show, :new, :create]
   end
 
   # Other scopes may use custom stacks.
