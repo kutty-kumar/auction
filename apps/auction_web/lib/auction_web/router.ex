@@ -21,12 +21,16 @@ defmodule AuctionWeb.Router do
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     delete "/login", SessionController, :delete
-    resources "/items", ItemController, only: [:index, :show, :new, :create, :edit, :update]
+
+    resources "/items", ItemController, only: [:index, :show, :new, :create, :edit, :update] do
+      resources "/bids", BidController, only: [:create]
+    end
+
     resources "/users", UserController, only: [:show, :new, :create]
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", AuctionWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", AuctionWeb.Api do
+    pipe_through :api
+    resources "/items", ItemController, only: [:index, :show]
+  end
 end
